@@ -516,12 +516,17 @@ section { position: relative; z-index: 2; }
 .orbit-ring::before {
   content: ""; position: absolute; inset: 0; border-radius: 50%; border: 1px dashed rgba(15, 14, 12, .14);
 }
-.orbit-ring::after {
+/* The teal "third" arc lives on .orbit-wheel (parent of the rotating ring),
+   so it stays stationary — only the dashed circle + shards rotate. Otherwise
+   the arc swung left↔right with the orbit and the wheel looked off-center. */
+.orbit-wheel::before {
   content: ""; position: absolute; inset: 12%; border-radius: 50%;
   background: conic-gradient(from -90deg, var(--teal-deep) 0deg, var(--teal-deep) 120deg, rgba(142, 197, 197, .16) 120deg, rgba(142, 197, 197, .16) 360deg);
   -webkit-mask: radial-gradient(circle, transparent 70%, #000 71%);
   mask: radial-gradient(circle, transparent 70%, #000 71%);
-  opacity: .7;
+  opacity: .5;
+  pointer-events: none;
+  z-index: 0;
 }
 @keyframes orbit-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes orbit-spin-rev { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
