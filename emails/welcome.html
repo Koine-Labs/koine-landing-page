@@ -4,60 +4,48 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light dark">
-  <meta name="supported-color-schemes" content="light dark">
-  <title>Welcome to Koine Labs</title>
+  <!-- light-only: email stays cream regardless of recipient's system theme -->
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light">
+  <title>Heard — Koine Labs</title>
   <style>
     body, table, td { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-    .ink-bg { background-color: #f8f4ec; }
     a { color: #5a9b9b; text-decoration: none; }
-    img { border: 0; outline: none; text-decoration: none; }
+    img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
 
     /* Narrow-screen tuning — iOS Mail, Apple Mail, newer Gmail/Outlook respect this */
     @media only screen and (max-width: 480px) {
-      .headline      { font-size: 52px !important; line-height: 0.96 !important; }
-      .greek-mark    { font-size: 56px !important; }
-      .body-text     { font-size: 16px !important; line-height: 1.6 !important; }
-      .eyebrow       { font-size: 10px !important; letter-spacing: 0.18em !important; }
-      .sig-text      { font-size: 16px !important; }
-      .outer-pad     { padding: 40px 18px !important; }
-    }
-
-    /* Dark-mode overrides — Apple Mail, iOS Mail, Outlook (web/desktop newer), Gmail iOS */
-    @media (prefers-color-scheme: dark) {
-      .ink-bg        { background-color: #0e0d0b !important; }
-      .ink           { color: #f4ecdc !important; }
-      .ink-2         { color: #d4cdbe !important; }
-      .ink-3         { color: #9c9384 !important; }
-      .teal          { color: #8ec5c5 !important; }
-      .rule          { background-color: rgba(244, 236, 220, 0.18) !important; }
-      .rule-teal     { background-color: #8ec5c5 !important; }
-      .greek-mark    { color: #8ec5c5 !important; opacity: 0.22 !important; }
-      .unsubscribe   { color: #9c9384 !important; border-bottom-color: #9c9384 !important; }
+      .headline   { font-size: 44px !important; line-height: 0.98 !important; }
+      .greek-mark { font-size: 40px !important; }
+      .body-text  { font-size: 16px !important; line-height: 1.6 !important; }
+      .eyebrow    { font-size: 10px !important; letter-spacing: 0.18em !important; }
+      .outer-pad  { padding: 40px 18px !important; }
+      .logo-img   { width: 20px !important; height: 20px !important; }
     }
   </style>
 </head>
-<body class="ink-bg" style="margin: 0; padding: 0; background-color: #f8f4ec; font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; color: #0f0e0c; -webkit-font-smoothing: antialiased;">
+<body style="margin: 0; padding: 0; background-color: #f8f4ec; font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; color: #0f0e0c; -webkit-font-smoothing: antialiased;">
 
-  <!-- Preheader (inbox preview text — hidden from rendered body) -->
+  <!-- Preheader — shows in inbox preview, hidden in rendered email -->
   <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all; color: #f8f4ec; font-size: 1px; line-height: 1px;">
     You're on the Koine Labs waitlist. A brief note from us, on what comes next.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </div>
 
-  <table role="presentation" class="ink-bg" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8f4ec;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f8f4ec;">
     <tr>
       <td align="center" class="outer-pad" style="padding: 64px 24px;">
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width: 560px;">
 
-          <!-- Eyebrow: two-chip journal-style header (echoes the device-frame chrome on the site) -->
+          <!-- Eyebrow: logo + "Koine Labs" on left, "Note 01 · MMXXVI" on right -->
           <tr>
             <td style="padding-bottom: 18px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td align="left" class="ink-3 eyebrow" style="font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #857d6e; line-height: 1.4;">
-                    Koine Labs
+                  <td align="left" valign="middle" style="font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #857d6e; line-height: 1.4;">
+                    <img class="logo-img" src="https://koinelabs.com/koine-logo.png" alt="" width="22" height="22" style="display: inline-block; vertical-align: middle; border: 0; margin-right: 10px;">
+                    <span style="vertical-align: middle;">Koine Labs</span>
                   </td>
-                  <td align="right" class="ink-3 eyebrow" style="font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #857d6e; line-height: 1.4;">
+                  <td align="right" valign="middle" class="eyebrow" style="font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #857d6e; line-height: 1.4;">
                     Note 01 &middot; MMXXVI
                   </td>
                 </tr>
@@ -68,56 +56,44 @@
           <!-- Hairline rule -->
           <tr>
             <td style="padding-bottom: 56px;">
-              <div class="rule" style="width: 100%; height: 1px; background-color: rgba(15, 14, 12, 0.10); font-size: 0; line-height: 0;">&nbsp;</div>
+              <div style="width: 100%; height: 1px; background-color: rgba(15, 14, 12, 0.10); font-size: 0; line-height: 0;">&nbsp;</div>
             </td>
           </tr>
 
-          <!-- Headline moment: italic Welcome -->
+          <!-- Headline: Heard. -->
           <tr>
-            <td class="teal headline" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-style: italic; font-size: 68px; line-height: 0.96; letter-spacing: -0.022em; color: #5a9b9b; padding-bottom: 40px;">
-              Welcome<span class="ink" style="color: #0f0e0c; font-style: italic;">.</span>
+            <td class="headline" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-style: italic; font-size: 56px; line-height: 0.98; letter-spacing: -0.022em; color: #5a9b9b; padding-bottom: 40px;">
+              Heard<span style="color: #0f0e0c; font-style: italic;">.</span>
             </td>
           </tr>
 
-          <!-- Letter body -->
+          <!-- Letter body — opens directly, no "A note from..." preamble -->
           <tr>
-            <td class="ink-2 body-text" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-size: 17px; line-height: 1.65; color: #3a352d; padding-bottom: 22px;">
-              A note from Koine Labs.
-            </td>
-          </tr>
-          <tr>
-            <td class="ink-2 body-text" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-size: 17px; line-height: 1.65; color: #3a352d; padding-bottom: 22px;">
+            <td class="body-text" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-size: 17px; line-height: 1.65; color: #3a352d; padding-bottom: 22px;">
               You just joined the waitlist for an ambient AI that&rsquo;s being built to know how you feel before you do &mdash; across waking and dreaming, from brain, audio, visual, heart, and body.
             </td>
           </tr>
           <tr>
-            <td class="ink-2 body-text" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-size: 17px; line-height: 1.65; color: #3a352d; padding-bottom: 22px;">
-              When <em class="teal" style="font-style: italic; color: #5a9b9b;">Daybook</em> and <em class="teal" style="font-style: italic; color: #5a9b9b;">Koine Wisp</em> open to a first cohort, you&rsquo;ll be among the first invited.
+            <td class="body-text" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-size: 17px; line-height: 1.65; color: #3a352d; padding-bottom: 22px;">
+              When <em style="font-style: italic; color: #5a9b9b;">Daybook</em> and <em style="font-style: italic; color: #5a9b9b;">Koine Wisp</em> open to a first cohort, you&rsquo;ll be among the first invited.
             </td>
           </tr>
           <tr>
-            <td class="ink-2 body-text" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-size: 17px; line-height: 1.65; color: #3a352d; padding-bottom: 48px;">
+            <td class="body-text" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-size: 17px; line-height: 1.65; color: #3a352d; padding-bottom: 56px;">
               Until then, we&rsquo;ll write to you only when something material happens. No noise.
             </td>
           </tr>
 
           <!-- Short teal accent rule -->
           <tr>
-            <td style="padding-bottom: 22px;">
-              <div class="rule-teal" style="width: 28px; height: 1px; background-color: #5a9b9b; font-size: 0; line-height: 0;">&nbsp;</div>
-            </td>
-          </tr>
-
-          <!-- Signature -->
-          <tr>
-            <td class="ink sig-text" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-style: italic; font-size: 18px; color: #0f0e0c; padding-bottom: 96px;">
-              Koine Labs
+            <td style="padding-bottom: 88px;">
+              <div style="width: 28px; height: 1px; background-color: #5a9b9b; font-size: 0; line-height: 0;">&nbsp;</div>
             </td>
           </tr>
 
           <!-- κοινή watermark — right-aligned, faded teal (echoes the site footer mark) -->
           <tr>
-            <td align="right" class="teal greek-mark" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-style: italic; font-size: 72px; line-height: 1; letter-spacing: -0.02em; color: #5a9b9b; opacity: 0.18; padding-bottom: 56px;">
+            <td align="right" class="greek-mark" style="font-family: Georgia, 'EB Garamond', 'Times New Roman', serif; font-style: italic; font-size: 52px; line-height: 1; letter-spacing: -0.02em; color: #5a9b9b; opacity: 0.20; padding-bottom: 56px;">
               κοινή
             </td>
           </tr>
@@ -125,7 +101,7 @@
           <!-- Footer hairline -->
           <tr>
             <td style="padding-bottom: 18px;">
-              <div class="rule" style="width: 100%; height: 1px; background-color: rgba(15, 14, 12, 0.10); font-size: 0; line-height: 0;">&nbsp;</div>
+              <div style="width: 100%; height: 1px; background-color: rgba(15, 14, 12, 0.10); font-size: 0; line-height: 0;">&nbsp;</div>
             </td>
           </tr>
 
@@ -134,11 +110,11 @@
             <td>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td align="left" class="ink-3" style="font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', Menlo, Consolas, monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #857d6e; line-height: 1.5;">
+                  <td align="left" style="font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', Menlo, Consolas, monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #857d6e; line-height: 1.5;">
                     San Francisco &middot; MMXXVI
                   </td>
-                  <td align="right" class="ink-3" style="font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', Menlo, Consolas, monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #857d6e; line-height: 1.5;">
-                    <a href="{{unsubscribeUrl}}" class="unsubscribe" style="color: #857d6e; text-decoration: none; border-bottom: 1px solid #857d6e; padding-bottom: 1px;">Unsubscribe</a>
+                  <td align="right" style="font-family: 'SF Mono', 'JetBrains Mono', 'Roboto Mono', Menlo, Consolas, monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #857d6e; line-height: 1.5;">
+                    <a href="{{unsubscribeUrl}}" style="color: #857d6e; text-decoration: none; border-bottom: 1px solid #857d6e; padding-bottom: 1px;">Unsubscribe</a>
                   </td>
                 </tr>
               </table>
