@@ -1329,36 +1329,39 @@ footer {
    six fit comfortably within the dashed ring. */
 @media (max-width: 760px) {
   .orbit-wheel {
-    width: min(90vw, 580px);
-    height: min(90vw, 580px);
+    /* smaller cap (300px instead of 580px) — on any phone wider than
+       ~352px the wheel hits the cap and renders at a fixed 300px, which
+       means any URL-bar-induced viewport jitter has nothing to act on */
+    width: min(85vw, 300px);
+    height: min(85vw, 300px);
     margin: 32px auto 0;
   }
   .shard {
-    /* override the desktop --r so shards sit closer to center */
-    --r: calc(min(90vw, 580px) * 0.36);
+    /* matches the new smaller wheel */
+    --r: calc(min(85vw, 300px) * 0.36);
   }
   .shard-body {
-    width: 96px;
-    padding: 8px 10px;
+    width: 88px;
+    padding: 7px 9px;
     border-radius: 8px;
   }
   .shard-body .v {
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1;
     letter-spacing: -0.01em;
   }
   .shard-body .k {
-    font-size: 7.5px;
+    font-size: 7px;
     letter-spacing: 0.14em;
     margin-top: 3px;
     line-height: 1.25;
   }
-  /* center fraction — slightly smaller so it doesn't dominate */
+  /* center fraction — proportional to the smaller wheel */
   .orbit-center .num {
-    font-size: clamp(60px, 17vw, 100px);
+    font-size: clamp(48px, 14vw, 72px);
   }
   .orbit-center .lbl {
-    font-size: 9px;
+    font-size: 8.5px;
     letter-spacing: 0.22em;
   }
   /* breathe more between body paragraph and orbit on mobile */
@@ -1367,15 +1370,20 @@ footer {
 
 /* extra-narrow phones — pull radius in further, shrink shards more */
 @media (max-width: 380px) {
+  .orbit-wheel {
+    width: min(82vw, 260px);
+    height: min(82vw, 260px);
+  }
   .shard {
-    --r: calc(min(90vw, 580px) * 0.34);
+    --r: calc(min(82vw, 260px) * 0.34);
   }
   .shard-body {
-    width: 84px;
+    width: 76px;
     padding: 6px 8px;
   }
-  .shard-body .v { font-size: 14px; }
-  .shard-body .k { font-size: 7px; letter-spacing: 0.12em; }
+  .shard-body .v { font-size: 13px; }
+  .shard-body .k { font-size: 6.5px; letter-spacing: 0.12em; }
+  .orbit-center .num { font-size: clamp(42px, 13vw, 60px); }
 }
 
 /* ──────────────── MOBILE — PRODUCT SECTION AS STACKED CARDS ──────────────── */
@@ -1481,19 +1489,23 @@ footer {
     width: min(110svw, 1800px);
     height: min(110svw, 1800px);
   }
-  /* mobile orbit-wheel + shard radius */
+  /* mobile orbit-wheel + shard radius — matches the new smaller caps */
   @media (max-width: 760px) {
     .orbit-wheel {
-      width: min(90svw, 580px);
-      height: min(90svw, 580px);
+      width: min(85svw, 300px);
+      height: min(85svw, 300px);
     }
     .shard {
-      --r: calc(min(90svw, 580px) * 0.36);
+      --r: calc(min(85svw, 300px) * 0.36);
     }
   }
   @media (max-width: 380px) {
+    .orbit-wheel {
+      width: min(82svw, 260px);
+      height: min(82svw, 260px);
+    }
     .shard {
-      --r: calc(min(90svw, 580px) * 0.34);
+      --r: calc(min(82svw, 260px) * 0.34);
     }
   }
 }
