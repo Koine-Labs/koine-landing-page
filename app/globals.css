@@ -1289,3 +1289,59 @@ footer {
   .scene .stateword { font-size: clamp(34px, 11.5vw, 64px); }
   .scene .quote { font-size: clamp(17px, 5vw, 24px); }
 }
+
+/* ──────────────── MOBILE — NORTHSTAR ORBIT WHEEL ──────────────── */
+/* The 6 shards orbit at radius 0.46 × wheel-size with 140px-wide bodies,
+   which overflows the wheel and overlaps adjacent shards on phones.
+   Pulling the orbit radius in to 0.36 and shrinking shards to 96px so all
+   six fit comfortably within the dashed ring. */
+@media (max-width: 760px) {
+  .orbit-wheel {
+    width: min(90vw, 580px);
+    height: min(90vw, 580px);
+    margin: 32px auto 0;
+  }
+  .shard {
+    /* override the desktop --r so shards sit closer to center */
+    --r: calc(min(90vw, 580px) * 0.36);
+  }
+  .shard-body {
+    width: 96px;
+    padding: 8px 10px;
+    border-radius: 8px;
+  }
+  .shard-body .v {
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .shard-body .k {
+    font-size: 7.5px;
+    letter-spacing: 0.14em;
+    margin-top: 3px;
+    line-height: 1.25;
+  }
+  /* center fraction — slightly smaller so it doesn't dominate */
+  .orbit-center .num {
+    font-size: clamp(60px, 17vw, 100px);
+  }
+  .orbit-center .lbl {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+  }
+  /* breathe more between body paragraph and orbit on mobile */
+  .northstar-body { padding: 0 24px; }
+}
+
+/* extra-narrow phones — pull radius in further, shrink shards more */
+@media (max-width: 380px) {
+  .shard {
+    --r: calc(min(90vw, 580px) * 0.34);
+  }
+  .shard-body {
+    width: 84px;
+    padding: 6px 8px;
+  }
+  .shard-body .v { font-size: 14px; }
+  .shard-body .k { font-size: 7px; letter-spacing: 0.12em; }
+}
