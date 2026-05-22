@@ -37,11 +37,17 @@ a { color: inherit; text-decoration: none; }
 button { font-family: inherit; }
 ::selection { background: var(--teal); color: var(--ink); }
 
-/* canvas — oversized 2x viewport so radial gradients always fully taper before edge */
+/* canvas — oversized 2x viewport so radial gradients always fully taper before edge.
+   Uses lvh/lvw (large viewport units) so the canvas is sized to the URL-bar-collapsed
+   viewport and DOESN'T resize during mobile Safari's URL-bar transitions — the root
+   cause of the page-wide rubberband effect. */
 .field-canvas {
   position: fixed;
   top: -50vh; left: -50vw;
   width: 200vw; height: 200vh;
+  /* modern browsers override with large viewport units */
+  top: -50lvh; left: -50lvw;
+  width: 200lvw; height: 200lvh;
   z-index: 0; pointer-events: none;
 }
 
@@ -59,6 +65,10 @@ button { font-family: inherit; }
   padding: 8px 8px 8px 22px;
   border-radius: 999px;
   pointer-events: auto;
+  /* promote to its own compositor layer — keeps the pill stable during
+     iOS Safari URL-bar transitions instead of repainting with the document */
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
   /* a faint warm tint *through* the glass — gives it the "stained" character
      without obscuring what's behind */
   background:
@@ -133,7 +143,9 @@ button { font-family: inherit; }
 
 /* ──────────────── HERO ──────────────── */
 .hero {
-  position: relative; min-height: 100vh;
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh; /* small-viewport — locked to URL-bar-expanded; no resize during transitions */
   display: flex; align-items: center; justify-content: center;
   padding: 120px 40px 96px; text-align: center; z-index: 2;
 }
@@ -209,9 +221,23 @@ section { position: relative; z-index: 2; }
 
 /* the scrub-stage: tall outer with sticky inner.
    Height = active scroll distance / scene. 440vh → ~85vh per scene,
-   long enough to read the typewriter in scene 2 at a normal scroll speed. */
-.scrub { position: relative; height: 440vh; margin-top: 24px; }
-.scrub-pin { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+   long enough to read the typewriter in scene 2 at a normal scroll speed.
+   Uses lvh so the scroll-distance math stays stable across mobile Safari's
+   URL-bar transitions (with vh, rect.height would change live and scene
+   snapping would misfire). */
+.scrub {
+  position: relative;
+  height: 440vh;
+  height: 440lvh;
+  margin-top: 24px;
+}
+.scrub-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100lvh;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
 .device {
   position: relative; width: min(86vmin, 820px); aspect-ratio: 1.2 / 1;
   background: linear-gradient(180deg, #fefcf7 0%, #f3ead3 100%);
@@ -516,17 +542,12 @@ section { position: relative; z-index: 2; }
 .orbit-ring::before {
   content: ""; position: absolute; inset: 0; border-radius: 50%; border: 1px dashed rgba(15, 14, 12, .14);
 }
-/* The teal "third" arc lives on .orbit-wheel (parent of the rotating ring),
-   so it stays stationary — only the dashed circle + shards rotate. Otherwise
-   the arc swung left↔right with the orbit and the wheel looked off-center. */
-.orbit-wheel::before {
+.orbit-ring::after {
   content: ""; position: absolute; inset: 12%; border-radius: 50%;
   background: conic-gradient(from -90deg, var(--teal-deep) 0deg, var(--teal-deep) 120deg, rgba(142, 197, 197, .16) 120deg, rgba(142, 197, 197, .16) 360deg);
   -webkit-mask: radial-gradient(circle, transparent 70%, #000 71%);
   mask: radial-gradient(circle, transparent 70%, #000 71%);
-  opacity: .5;
-  pointer-events: none;
-  z-index: 0;
+  opacity: .7;
 }
 @keyframes orbit-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes orbit-spin-rev { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
@@ -892,6 +913,7 @@ footer {
   position: relative;
   z-index: 2;
   min-height: 100vh;
+  min-height: 100svh; /* locked to URL-bar-expanded viewport */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1051,8 +1073,9 @@ footer {
     margin-top: 20px;
   }
   /* scrub on mobile — long enough that each scene dwells ~1.3 sec at
-     typical scroll speed, so the typewriter in scene 2 can complete */
-  .scrub { height: 360vh; margin-top: 8px; }
+     typical scroll speed, so the typewriter in scene 2 can complete.
+     lvh keeps scroll-distance math stable across URL-bar transitions. */
+  .scrub { height: 360vh; height: 360lvh; margin-top: 8px; }
   .device { width: min(94vw, 600px); }
   .scrub-coda { padding: 28px 24px 4px; }
   .scrub-coda p { font-size: 15px; line-height: 1.45; }
@@ -1142,18 +1165,22 @@ footer {
 /* Layered on top of the earlier max-width:760px block. Cuts everything
    the user is still calling "huge gaps" on phone. */
 @media (max-width: 760px) {
-  /* canvas — smaller on mobile so the GPU isn't blocking renders */
+  /* canvas — smaller on mobile so the GPU isn't blocking renders.
+     lvw/lvh keep the canvas stable through URL-bar transitions. */
   .field-canvas {
     top: -20vh; left: -20vw;
     width: 140vw; height: 140vh;
+    top: -20lvh; left: -20lvw;
+    width: 140lvw; height: 140lvh;
   }
 
   /* hero — not full viewport on phone */
   .hero { min-height: auto; padding: 88px 20px 40px; }
 
   /* daybook scrub — matches the first mobile block; ~70vh per active
-     scene so scene 2's typewriter has time to play through */
-  .scrub { height: 360vh; margin-top: 4px; }
+     scene so scene 2's typewriter has time to play through.
+     lvh keeps scroll-distance math stable. */
+  .scrub { height: 360vh; height: 360lvh; margin-top: 4px; }
 
   /* between Daybook intro and scrub — kill leading whitespace */
   .daybook { padding: 24px 0 0; }
@@ -1441,4 +1468,32 @@ footer {
   .manifesto { padding: 56px 0 64px; }
   .faq       { padding: 56px 0 48px; }
   .waitlist  { padding: 40px 0 56px; }
+}
+
+/* ──────────────── MODERN-BROWSER SVW UPGRADES ──────────────── */
+/* min() expressions reject any unsupported unit and discard the whole
+   declaration — so we can't use the cascade-fallback pattern here.
+   Gate svw upgrades behind @supports instead. Browsers without svw
+   continue to use the vw/vmin originals. */
+@supports (width: 1svw) {
+  /* hero breathing ring — locked to small-viewport width */
+  .ring svg {
+    width: min(110svw, 1800px);
+    height: min(110svw, 1800px);
+  }
+  /* mobile orbit-wheel + shard radius */
+  @media (max-width: 760px) {
+    .orbit-wheel {
+      width: min(90svw, 580px);
+      height: min(90svw, 580px);
+    }
+    .shard {
+      --r: calc(min(90svw, 580px) * 0.36);
+    }
+  }
+  @media (max-width: 380px) {
+    .shard {
+      --r: calc(min(90svw, 580px) * 0.34);
+    }
+  }
 }
