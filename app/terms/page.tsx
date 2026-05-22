@@ -28,10 +28,9 @@ export default function TermsPage() {
       <section>
         <h2>Who we are</h2>
         <p>
-          Koine Labs, Inc. is a Delaware corporation headquartered in San
-          Francisco, California, building ambient AI for inner state.
-          References to &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;Koine
-          Labs&rdquo; mean the company.
+          Koine Labs is a project building ambient AI for inner state, based
+          in Atlanta, Georgia. References to &ldquo;we,&rdquo; &ldquo;us,&rdquo;
+          or &ldquo;Koine Labs&rdquo; mean the team behind koinelabs.com.
         </p>
       </section>
 
@@ -80,8 +79,8 @@ export default function TermsPage() {
         <p>
           The Koine Labs name, Daybook, Koine Wisp, the κοινή mark, the site
           design, copy, and any associated trademarks are the property of
-          Koine Labs, Inc. You may not reproduce, distribute, or create
-          derivative works of any of it without prior written permission.
+          Koine Labs. You may not reproduce, distribute, or create derivative
+          works of any of it without prior written permission.
         </p>
         <p>
           Quoting short excerpts for criticism, journalism, or research is
@@ -123,9 +122,9 @@ export default function TermsPage() {
       <section>
         <h2>Governing law</h2>
         <p>
-          These terms are governed by the laws of the State of Delaware,
+          These terms are governed by the laws of the State of Georgia,
           without regard to its conflict-of-law principles. Any dispute will
-          be resolved in the state or federal courts located in Delaware.
+          be resolved in the state or federal courts located in Georgia.
         </p>
       </section>
 

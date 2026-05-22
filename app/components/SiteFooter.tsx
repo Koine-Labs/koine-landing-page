@@ -58,7 +58,7 @@ export function SiteFooter() {
         </div>
 
         <div className="foot-bottom">
-          <span>&copy; MMXXVI Koine Labs, Inc. &middot; San Francisco</span>
+          <span>&copy; MMXXVI Koine Labs &middot; Atlanta</span>
           <span>κοινή &middot; common</span>
         </div>
       </div>
