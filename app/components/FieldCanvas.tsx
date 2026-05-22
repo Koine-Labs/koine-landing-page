@@ -22,7 +22,12 @@ export function FieldCanvas() {
     let scrollY = 0;
     let raf = 0;
 
-    const dpr = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
+    // Cap DPR at 1.5 — full Retina (2–3x) on a 200vw×200vh canvas crushes
+    // mobile GPUs. Visual difference is negligible for soft radial gradients.
+    const dpr =
+      typeof window !== "undefined"
+        ? Math.min(window.devicePixelRatio || 1, 1.5)
+        : 1;
     const resize = () => {
       const rect = cvs.getBoundingClientRect();
       W = cvs.width = Math.max(1, Math.floor(rect.width * dpr));

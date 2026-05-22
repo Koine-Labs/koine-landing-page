@@ -29,7 +29,9 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  /* `clip` (not `hidden`) preserves the position:sticky behavior the
+     scrub stage relies on — overflow:hidden breaks sticky on iOS Safari. */
+  overflow-x: clip;
 }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; }
@@ -995,4 +997,176 @@ footer {
   text-transform: uppercase;
   color: #a14a3c;
   text-align: center;
+}
+
+/* ──────────────── MOBILE OVERRIDES ──────────────── */
+/* Tighter spacing across the whole page on phone-sized screens.
+   Targets the gaps the desktop layout has too much of when scaled down. */
+@media (max-width: 760px) {
+
+  /* === HERO === */
+  .hero {
+    min-height: auto;
+    padding: 96px 20px 56px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 12.5vw, 72px);
+    letter-spacing: -0.022em;
+  }
+  .hero-eyebrow {
+    margin-bottom: 24px;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+  }
+  .hero-eyebrow::before,
+  .hero-eyebrow::after { width: 20px; }
+  .hero-sub {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 24px auto 0;
+  }
+  .hero-cta {
+    margin-top: 28px;
+    padding: 14px 22px;
+    font-size: 14px;
+  }
+  .scroll-cue { bottom: 18px; }
+
+  /* === DAYBOOK + SCRUB === */
+  .daybook { padding: 32px 0 0; }
+  .daybook-intro { padding: 0 20px; }
+  .daybook-intro h2 {
+    font-size: clamp(36px, 10.5vw, 60px);
+  }
+  .daybook-intro p {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-top: 20px;
+  }
+  /* shorter scrub: 4 scenes in less scroll distance */
+  .scrub { height: 240vh; margin-top: 8px; }
+  .device { width: min(94vw, 600px); }
+  .scrub-coda { padding: 28px 24px 4px; }
+  .scrub-coda p { font-size: 15px; line-height: 1.45; }
+
+  /* === NORTHSTAR === */
+  .northstar { padding: 48px 0 32px; }
+  .northstar .northstar-h {
+    font-size: clamp(40px, 11vw, 64px);
+  }
+  .northstar-body {
+    font-size: 15px;
+    padding: 0 20px;
+    margin-top: 20px;
+  }
+  .orbit-wheel { margin: 36px auto 0; }
+  .horizon {
+    margin-top: 36px;
+    grid-template-columns: 1fr;
+  }
+  .horizon .h { padding: 22px 20px; }
+  .horizon .h .t { font-size: 22px; }
+
+  /* === MANIFESTO === */
+  .manifesto { padding: 32px 0 48px; }
+  .mline {
+    font-size: clamp(26px, 8vw, 48px);
+    line-height: 1.1;
+  }
+  .footnote {
+    margin: 40px 20px 0;
+    padding: 0 0 0 0;
+    grid-template-columns: 1fr;
+    border-top: 1px solid var(--rule);
+    padding-top: 14px;
+  }
+  .footnote .marker { grid-row: auto; }
+
+  /* === FAQ === */
+  .faq { padding: 32px 0 32px; }
+  .chapter h2 { font-size: clamp(32px, 9vw, 56px); }
+  .chapter .lede { font-size: 14px; padding: 0 16px; }
+  .qa .q { font-size: 20px; }
+  .qa .a { font-size: 14px; }
+
+  /* === WAITLIST === */
+  .waitlist { padding: 24px 0 48px; }
+  .waitlist .section-card { padding: 44px 20px; }
+  .waitlist h2 {
+    font-size: clamp(40px, 11vw, 64px);
+    line-height: 0.98;
+  }
+  .form input { font-size: 14px; padding: 12px 16px; }
+  .form button { padding: 12px 16px; font-size: 13px; }
+
+  /* === FOOTER (compact 2-column links) === */
+  footer { padding: 48px 24px 24px; }
+  .foot-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 24px;
+    padding-bottom: 28px;
+  }
+  .foot-brand { grid-column: 1 / -1; gap: 12px; }
+  .foot-brand .row .n { font-size: 20px; }
+  .foot-brand p { font-size: 13px; line-height: 1.5; }
+  .foot-col h4 { margin-bottom: 10px; }
+  .foot-col ul { gap: 6px; }
+  .foot-col a { font-size: 14px; }
+  .foot-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 18px;
+    font-size: 9px;
+  }
+  .greek-mark { font-size: 18vw; bottom: -3vw; }
+}
+
+/* extra-narrow phones */
+@media (max-width: 380px) {
+  .hero h1 { font-size: clamp(36px, 13vw, 64px); }
+  .daybook-intro h2 { font-size: clamp(32px, 11vw, 56px); }
+  .nav-pill { gap: 16px; padding: 6px 6px 6px 16px; }
+  .navlinks { display: none; }
+}
+
+/* ──────────────── MOBILE — AGGRESSIVE TIGHTENING ──────────────── */
+/* Layered on top of the earlier max-width:760px block. Cuts everything
+   the user is still calling "huge gaps" on phone. */
+@media (max-width: 760px) {
+  /* canvas — smaller on mobile so the GPU isn't blocking renders */
+  .field-canvas {
+    top: -20vh; left: -20vw;
+    width: 140vw; height: 140vh;
+  }
+
+  /* hero — not full viewport on phone */
+  .hero { min-height: auto; padding: 88px 20px 40px; }
+
+  /* daybook scrub — much shorter scroll distance */
+  .scrub { height: 180vh; margin-top: 4px; }
+
+  /* between Daybook intro and scrub — kill leading whitespace */
+  .daybook { padding: 24px 0 0; }
+  .daybook-intro h2 { font-size: clamp(34px, 9.5vw, 56px); }
+  .daybook-intro p { margin-top: 16px; }
+
+  /* the scrub-coda → northstar transition — tighten */
+  .scrub-coda { padding: 20px 24px 0; }
+
+  /* every section — cut top + bottom padding hard */
+  .northstar { padding: 40px 0 24px; }
+  .manifesto { padding: 24px 0 40px; }
+  .faq       { padding: 24px 0 32px; }
+  .waitlist  { padding: 16px 0 40px; }
+
+  /* between section transitions — tighter inner gaps */
+  .northstar-body { margin-top: 16px; }
+  .orbit-wheel { margin: 28px auto 0; }
+  .horizon { margin-top: 28px; }
+  .manifesto-lines { gap: 0.3em; }
+  .chapter { margin-bottom: 28px; }
+  .faq-list { gap: 0; }
+  .qa { padding: 22px 0; }
+  .qa.open { padding: 26px 0; }
 }
