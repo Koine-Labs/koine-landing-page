@@ -207,8 +207,10 @@ section { position: relative; z-index: 2; }
 .daybook-intro p { margin-top: 32px; font-size: 19px; line-height: 1.55; color: var(--ink-2); max-width: 560px; margin-left: auto; margin-right: auto; }
 .daybook-intro p .wisp { font-family: var(--serif); font-style: italic; color: var(--teal-deep); }
 
-/* the scrub-stage: tall outer with sticky inner */
-.scrub { position: relative; height: 380vh; margin-top: 24px; }
+/* the scrub-stage: tall outer with sticky inner.
+   Height = active scroll distance / scene. 440vh → ~85vh per scene,
+   long enough to read the typewriter in scene 2 at a normal scroll speed. */
+.scrub { position: relative; height: 440vh; margin-top: 24px; }
 .scrub-pin { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .device {
   position: relative; width: min(86vmin, 820px); aspect-ratio: 1.2 / 1;
@@ -1043,8 +1045,9 @@ footer {
     line-height: 1.5;
     margin-top: 20px;
   }
-  /* shorter scrub: 4 scenes in less scroll distance */
-  .scrub { height: 240vh; margin-top: 8px; }
+  /* scrub on mobile — long enough that each scene dwells ~1.3 sec at
+     typical scroll speed, so the typewriter in scene 2 can complete */
+  .scrub { height: 360vh; margin-top: 8px; }
   .device { width: min(94vw, 600px); }
   .scrub-coda { padding: 28px 24px 4px; }
   .scrub-coda p { font-size: 15px; line-height: 1.45; }
@@ -1143,8 +1146,9 @@ footer {
   /* hero — not full viewport on phone */
   .hero { min-height: auto; padding: 88px 20px 40px; }
 
-  /* daybook scrub — much shorter scroll distance */
-  .scrub { height: 180vh; margin-top: 4px; }
+  /* daybook scrub — matches the first mobile block; ~70vh per active
+     scene so scene 2's typewriter has time to play through */
+  .scrub { height: 360vh; margin-top: 4px; }
 
   /* between Daybook intro and scrub — kill leading whitespace */
   .daybook { padding: 24px 0 0; }
