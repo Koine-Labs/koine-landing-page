@@ -153,7 +153,16 @@ export default function Home() {
   }, []);
 
   // Typewriter for scene 2's quote — types out on scene entry, resets on exit.
+  // On mobile the scrub-stage is disabled (scenes show as stacked cards), so we
+  // skip the typewriter entirely and show the full quote immediately.
   useEffect(() => {
+    const isMobile =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 760px)").matches;
+    if (isMobile) {
+      setTypedLength(SCENE_2_QUOTE.length);
+      return;
+    }
     if (activeScene !== 2) {
       setTypedLength(0);
       return;

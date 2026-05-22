@@ -1345,3 +1345,95 @@ footer {
   .shard-body .v { font-size: 14px; }
   .shard-body .k { font-size: 7px; letter-spacing: 0.12em; }
 }
+
+/* ──────────────── MOBILE — PRODUCT SECTION AS STACKED CARDS ──────────────── */
+/* On phone, the sticky scrub stage is replaced with 4 standalone cards
+   that scroll normally. The desktop scrub animation is preserved. */
+@media (max-width: 760px) {
+  /* kill the tall sticky scrub container; let content flow naturally */
+  .scrub {
+    height: auto;
+    margin-top: 16px;
+    padding: 0 16px;
+  }
+  .scrub-pin {
+    position: static;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+  /* the .device frame chrome is dropped on mobile — scenes stand alone */
+  .device {
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: auto;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0 auto;
+    overflow: visible;
+  }
+  .device::before { display: none; }
+  .device-frame {
+    position: static;
+    inset: auto;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .device-header,
+  .device-footer { display: none; }
+  .device-body {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  /* every scene becomes a standalone card — all visible, no opacity gating */
+  .scene {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    transform: none !important;
+    min-height: 260px;
+    padding: 36px 22px;
+    background: linear-gradient(180deg, #fefcf7 0%, #f5eed8 100%);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px -28px rgba(15, 14, 12, 0.18);
+    overflow: visible;
+  }
+  /* shorter, cleaner divider between cards */
+  .scene + .scene { margin-top: 0; }
+}
+
+/* ──────────────── FAQ ROBUST FIX ──────────────── */
+/* Forces the answer to be visible whenever the .qa is open, on every
+   viewport. Previous transitions/cascade may have been getting blocked. */
+.qa.open .a {
+  max-height: 1500px !important;
+  opacity: 1 !important;
+  margin-top: 16px !important;
+  display: block !important;
+  visibility: visible !important;
+  color: var(--ink-2);
+}
+
+/* ──────────────── MORE BREATHING ROOM BETWEEN SECTIONS ──────────────── */
+/* Sections 2→3 (Northstar → Manifesto) and 3→4 (Manifesto → FAQ) felt
+   abrupt. Adding meaningful whitespace before each transition. */
+.northstar { padding: 120px 0 120px; }   /* was 120/72 */
+.manifesto { padding: 120px 0 140px; }   /* was 64/96 */
+.faq       { padding: 120px 0 80px; }    /* was 80/80 */
+.waitlist  { padding: 80px 0 96px; }     /* was 64/96 */
+
+@media (max-width: 760px) {
+  .northstar { padding: 56px 0 56px; }
+  .manifesto { padding: 56px 0 64px; }
+  .faq       { padding: 56px 0 48px; }
+  .waitlist  { padding: 40px 0 56px; }
+}
