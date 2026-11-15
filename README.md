@@ -27,14 +27,14 @@ Shared facts (site address, email, navigation, product names) are in `app/lib/si
 Both form endpoints check input on the server, ignore a hidden honeypot field and too-fast submissions, limit how often one address can post (in memory, per server instance), and never log what people type.
 
 - **Waitlist** — `app/api/waitlist/route.ts` adds the address to Loops with user group "Waitlist" and the source `koinelabs.com, <product>`. It never re-subscribes an address that unsubscribed.
-- **Contact** — `app/api/contact/route.ts` sends the message to the lab's inbox as a Loops transactional email. It does not store the message or add the sender to any list. When it is not configured it answers 503, and the form offers to send the same message from the visitor's email app.
+- **Contact** — `app/api/contact/route.ts` sends the message to the lab's inbox as a Loops transactional email. It does not store the message or add the sender to any list. The email's reply-to is the visitor's address, so answering it answers them. When it is not configured it answers 503, and the form offers to send the same message from the visitor's email app.
 
 Environment variables (Vercel → Settings → Environment Variables):
 
-| Name | Needed for | Status on 14 Nov 2026 |
+| Name | Needed for | Status on 15 Nov 2026 |
 |---|---|---|
 | `LOOPS_API_KEY` | both forms | set for Production and Preview |
-| `LOOPS_CONTACT_TRANSACTIONAL_ID` | contact form | not set. Create a transactional email in Loops whose body uses the data variables `name`, `email`, `topic` and `message`, then set its ID here |
+| `LOOPS_CONTACT_TRANSACTIONAL_ID` | contact form | set for Production and Preview on 15 Nov 2026. It is the ID of the published Loops transactional email "Contact form message": sent from `team@send.koinelabs.com`, subject `Website message: {topic}`, reply-to `{email}`, and a body that uses the data variables `name`, `email`, `topic` and `message`. Loops refuses a send that leaves one of the four out, so change the template and `app/api/contact/route.ts` together. Vercel applies a changed value only to new deployments, so redeploy after changing it |
 | `CONTACT_INBOX` | contact form, optional | defaults to `team@koinelabs.com` |
 | `LOOPS_LIST_MENTAT`, `LOOPS_LIST_ANNULA`, `LOOPS_LIST_ANCHOR`, `LOOPS_LIST_NEWS` | optional | not set. Loops mailing-list IDs, so each product (and lab news) can be emailed separately |
 | `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN`, `NEXT_PUBLIC_POSTHOG_HOST` | visitor statistics | set for Production and Preview on 15 Nov 2026. Both are needed; without them no statistics run. The token is the PostHog project's public token (`phc_…`), which is meant to be visible in page code and can only send events; the host is `https://us.i.posthog.com`. They are read at build time, so redeploy after changing them |
@@ -89,19 +89,22 @@ Two things keep a newly opened page at its top, and both are needed with Next 16
 | Preview in Safari on an iPhone 17 simulator (iOS 27.0): home page, Menu, and a move to `/anchor` look right | device verified (simulator, not a physical phone) | 2026-11-15 |
 | One real waitlist sign-up through the preview's `/api/waitlist` answered 200, which the endpoint only does when Loops accepted the contact; `/api/contact` answered 503 with the email fallback, as expected without the template | runtime verified | 2026-11-15 |
 | After a move from one page to another the new page starts at its top (it used to land 35 px down, hiding the breadcrumb), and in-page jumps land clear of the header; measured in WebKit at both sizes | runtime verified | 2026-11-15 |
-| Firefox | not tested: Playwright's Firefox build does not start on this macOS version. Read from the code instead: every newer CSS feature in use has a fallback or is ignored harmlessly (anchor positioning has a fixed fallback, the popover menu has a class fallback) | — |
+| Live site in Firefox 159 (Playwright, run on Linux because its Firefox build does not start on this macOS version) at desktop size and at phone width: the same suite as the Safari-engine row passes (all 12 pages, the header and Menu, both forms' checks and answers, statistics sent and nothing stored). Firefox logged one kind of console warning, "The execution of microtasks on this page was reordered", and no errors. Form endpoints and PostHog were answered by the test | runtime verified | 2026-11-15 |
 | Live on `www.koinelabs.com` (commit `d101fb3`): bare domain redirects to `www`; every page 200, unknown path 404; robots, sitemap, security.txt, manifest, icons and sharing card served; security headers and content policy present; both endpoints refuse bad input; the Safari-engine suite passes at both sizes | runtime verified | 2026-11-15 |
 | One real visit to the live site in Chrome: page views, clicks and page leaves stored in PostHog under `www.koinelabs.com`, with no IP address or location, and nothing written to the browser | runtime verified | 2026-11-15 |
-| A physical phone; the contact form delivering through Loops | not tested | — |
+| Contact form delivering through Loops: one message posted to the live `/api/contact` and one typed into the live `/contact` page in Safari's engine. Both answered 200 and the page showed its thanks; both arrived in the lab inbox from `team@send.koinelabs.com` with the name, address, topic and text in place | runtime verified | 2026-11-15 |
+| A physical phone | not tested | — |
 
 ## Open after publishing
 
 - Done, 14 Nov 2026: the owner reviewed the six app screenshots (Anchor: Today, Calendar, This week; Annula: Account, Desk, Watchlist) and approved them for the public site and this public repository.
-- Done, 15 Nov 2026: the owner accepted the policy pages as drafted, and said there is no existing waitlist, so nobody needs notice of the new privacy policy. The privacy policy was then changed to name PostHog instead of Vercel for visitor statistics.
+- Done, 15 Nov 2026: the owner accepted the policy pages as drafted, and said there is no existing waitlist. The privacy policy was then changed to name PostHog instead of Vercel for visitor statistics.
+- Open: Loops does hold earlier contacts from the old site: the owner's own test sign-ups from May 2026 and one outside sign-up from September 2026. The old policy promised notice of changes, so the owner should decide whether to write to that one person or remove them.
 - Done, 15 Nov 2026: the PostHog project exists, is set up as described under "Visitor statistics", and its token and host are in Vercel.
 - Done, 15 Nov 2026: PostHog's data processing agreement is signed by both sides, in the name of The House of Agrawal LLC (generated in the "Koine Labs" PostHog organisation under Legal documents). `/privacy` relies on it when it says PostHog acts under a contract.
 - `/privacy` says statistics are kept for up to one year, which is PostHog's free-plan retention. Change that line if the plan changes.
-- Contact form: create the Loops transactional email and set `LOOPS_CONTACT_TRANSACTIONAL_ID`. Until then the form offers to send the message from the visitor's email app.
+- Done, 15 Nov 2026: the contact form delivers. The Loops transactional email is published, its ID is in Vercel, and Loops shows the sending domain `send.koinelabs.com` as verified (its seven DNS records are in the `koinelabs.com` zone).
+- Loops' data processing agreement is part of its terms of service, so there was nothing separate to sign. `/privacy` relies on it when it says Loops acts under a contract.
 - Marketing emails from Loops must carry a physical postal address (US CAN-SPAM); set one in Loops before the first one is sent.
 - `emails/welcome.html` still describes Daybook and Koine Wisp; no code sends it. Check that Loops has no automation that sends it when a contact is added.
 - `docs/claim-audit.md` audits the old site's claims, not this branch's.
