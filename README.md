@@ -2,8 +2,8 @@
 
 The public site for Koine Labs, served at `https://www.koinelabs.com` (the bare domain redirects there). A Next.js 16 App Router app, hosted on Vercel (project `koine-labs-website`).
 
-**Branch `site-relaunch` (pushed, not yet published):** the new site. Vercel builds a sign-in-protected preview of it (the project's `git-site-relaunch` address). A short homepage for investors, partners and anyone looking the lab up, one page per product (Mentat, Annula, Anchor), About, Notebook and Contact, waitlist sign-up on each product page, a contact form, cookieless visitor statistics, and the policy pages. Its pages were ported on 14 Nov 2026 from the approved prototype in the untracked `design-prototypes/public-v10/`; edit the TSX in `app/` from now on.
-**`main` (live today):** the earlier "Ambient AI" site about Daybook and Koine Wisp.
+**Live since 15 Nov 2026 (`main`):** a short homepage for investors, partners and anyone looking the lab up, one page per product (Mentat, Annula, Anchor), About, Notebook and Contact, waitlist sign-up on each product page, a contact form, cookieless visitor statistics, and the policy pages. It replaced the earlier "Ambient AI" site about Daybook and Koine Wisp. The pages were ported on 14 Nov 2026 from an approved prototype; edit the TSX in `app/`.
+**Branch `site-relaunch`:** where the new site was built. It equals `main` at publication. Vercel builds a sign-in-protected preview of any branch that is pushed.
 
 ## Pages
 
@@ -88,18 +88,19 @@ Two things keep a newly opened page at its top, and both are needed with Next 16
 | One real waitlist sign-up through the preview's `/api/waitlist` answered 200, which the endpoint only does when Loops accepted the contact; `/api/contact` answered 503 with the email fallback, as expected without the template | runtime verified | 2026-11-15 |
 | After a move from one page to another the new page starts at its top (it used to land 35 px down, hiding the breadcrumb), and in-page jumps land clear of the header; measured in WebKit at both sizes | runtime verified | 2026-11-15 |
 | Firefox | not tested: Playwright's Firefox build does not start on this macOS version. Read from the code instead: every newer CSS feature in use has a fallback or is ignored harmlessly (anchor positioning has a fixed fallback, the popover menu has a class fallback) | — |
-| A physical phone; the contact form delivering through Loops; statistics on the live domain | not tested | — |
-| Live on koinelabs.com | `main` only (the old site) | — |
+| Live on `www.koinelabs.com` (commit `d101fb3`): bare domain redirects to `www`; every page 200, unknown path 404; robots, sitemap, security.txt, manifest, icons and sharing card served; security headers and content policy present; both endpoints refuse bad input; the Safari-engine suite passes at both sizes | runtime verified | 2026-11-15 |
+| One real visit to the live site in Chrome: page views, clicks and page leaves stored in PostHog under `www.koinelabs.com`, with no IP address or location, and nothing written to the browser | runtime verified | 2026-11-15 |
+| A physical phone; the contact form delivering through Loops | not tested | — |
 
-## Before publishing
+## Open after publishing
 
 - Done, 14 Nov 2026: the owner reviewed the six app screenshots (Anchor: Today, Calendar, This week; Annula: Account, Desk, Watchlist) and approved them for the public site and this public repository.
 - Done, 15 Nov 2026: the owner accepted the policy pages as drafted, and said there is no existing waitlist, so nobody needs notice of the new privacy policy. The privacy policy was then changed to name PostHog instead of Vercel for visitor statistics.
 - Done, 15 Nov 2026: the PostHog project exists, is set up as described under "Visitor statistics", and its token and host are in Vercel.
-- `/privacy` says PostHog acts under a contract, so accept PostHog's data processing agreement for the "Koine Labs" organisation.
+- `/privacy` says PostHog acts under a contract. PostHog's data processing agreement for the "Koine Labs" organisation is generated in PostHog under Legal documents and signed by email; it needs the owner's legal name and address.
 - `/privacy` says statistics are kept for up to one year, which is PostHog's free-plan retention. Change that line if the plan changes.
 - Contact form: create the Loops transactional email and set `LOOPS_CONTACT_TRANSACTIONAL_ID`. Until then the form offers to send the message from the visitor's email app.
 - Marketing emails from Loops must carry a physical postal address (US CAN-SPAM); set one in Loops before the first one is sent.
 - `emails/welcome.html` still describes Daybook and Koine Wisp; no code sends it. Check that Loops has no automation that sends it when a contact is added.
 - `docs/claim-audit.md` audits the old site's claims, not this branch's.
-- Publishing means merging into `main`, which Vercel deploys.
+- Any push to `main` deploys to the live site.
