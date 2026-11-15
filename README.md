@@ -5,6 +5,8 @@ The public site for Koine Labs, served at `https://www.koinelabs.com` (the bare 
 **Live since 15 Nov 2026 (`main`):** a short homepage for investors, partners and anyone looking the lab up, one page per product (Mentat, Annula, Anchor), About, Notebook and Contact, waitlist sign-up on each product page, a contact form, cookieless visitor statistics, and the policy pages. It replaced the earlier "Ambient AI" site about Daybook and Koine Wisp. The pages were ported on 14 Nov 2026 from an approved prototype; edit the TSX in `app/`.
 **Branch `site-relaunch`:** where the new site was built. It equals `main` at publication. Vercel builds a sign-in-protected preview of any branch that is pushed.
 
+**Who operates it:** Koine Labs is a research lab within The House of Agrawal LLC, which is the legal entity named in the footer, the privacy policy and the terms. The owner does not want a personal name anywhere on the site (decided 15 Nov 2026).
+
 ## Pages
 
 | Route | What it is |

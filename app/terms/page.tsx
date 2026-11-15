@@ -23,7 +23,7 @@ const parts: Part[] = [
   {
     id: "who",
     title: "Who we are",
-    body: <p>Koine Labs (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a research lab based in Atlanta, Georgia, in the United States. You can reach us at {mail}.</p>,
+    body: <p>Koine Labs (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a research lab based in Atlanta, Georgia, in the United States. It is operated by The House of Agrawal LLC. You can reach us at {mail}.</p>,
   },
   {
     id: "use",
@@ -84,7 +84,7 @@ const parts: Part[] = [
   {
     id: "liability",
     title: "Limit of liability",
-    body: <p>To the extent the law allows, Koine Labs and the people who run it are not liable for indirect, incidental, special or consequential losses, or for lost profits or data, arising from your use of the site. Our total liability for any claim about the site is limited to US$100. Some places do not allow these limits, so they may not all apply to you.</p>,
+    body: <p>To the extent the law allows, Koine Labs, The House of Agrawal LLC and the people who run them are not liable for indirect, incidental, special or consequential losses, or for lost profits or data, arising from your use of the site. Our total liability for any claim about the site is limited to US$100. Some places do not allow these limits, so they may not all apply to you.</p>,
   },
   {
     id: "end",

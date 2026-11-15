@@ -48,7 +48,7 @@ export default function Page() {
             </div>
             <div className="later">
               <h2 className="part">Who we are</h2>
-              <p className="going">Koine Labs is run by Aakash Agrawal.</p>
+              <p className="going">Koine Labs is a research lab within The House of Agrawal.</p>
               <a className="mail" href="mailto:team@koinelabs.com?subject=A%20conversation%20with%20Koine%20Labs">team@koinelabs.com</a>
               <p className="more"><a href="/contact">Or send us a message</a></p>
             </div>

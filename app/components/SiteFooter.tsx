@@ -40,7 +40,7 @@ export default function SiteFooter() {
           <Column title="Policies" items={LEGAL} path={path} />
         </nav>
         <p className="foot-legal">
-          <span>© {new Date().getFullYear()} Koine Labs, Atlanta, Georgia</span>
+          <span>© {new Date().getFullYear()} The House of Agrawal LLC. Koine Labs, Atlanta, Georgia.</span>
           <span>No cookies. No advertising trackers.</span>
         </p>
       </div>

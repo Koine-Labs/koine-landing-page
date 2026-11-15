@@ -15,7 +15,7 @@ const parts: Part[] = [
     title: "Who we are",
     body: (
       <>
-        <p>Koine Labs (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a research lab based in Atlanta, Georgia, in the United States. It is run by Aakash Agrawal, who is responsible for the personal information described here.</p>
+        <p>Koine Labs (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a research lab based in Atlanta, Georgia, in the United States. It is operated by The House of Agrawal LLC, which is responsible for the personal information described here.</p>
         <p>You can reach us about anything in this policy at {mail}.</p>
       </>
     ),
