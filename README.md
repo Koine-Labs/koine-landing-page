@@ -55,6 +55,13 @@ PostHog (`posthog-js`), in its cookieless mode. The owner asked for PostHog on 1
 
 `next.config.ts` sets `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy`, HSTS, and, on production builds, a Content Security Policy limited to this origin, plus the PostHog host for outgoing statistics when a PostHog project is set.
 
+## Scrolling between pages
+
+Two things keep a newly opened page at its top, and both are needed with Next 16.4 or later:
+
+- `scroll-padding-top` on `html` (`app/globals.css`) must stay a little less than the header's height. Next treats the top of a new page as hidden when it sits above that line, and scrolls.
+- `<html data-scroll-behavior="smooth">` (`app/layout.tsx`) lets Next switch smooth scrolling off while it changes page. Without it the scroll to the top is animated and ends in the wrong place.
+
 ## Safe development path
 
 1. Dependencies: `npm ci`.
@@ -76,7 +83,12 @@ PostHog (`posthog-js`), in its cookieless mode. The owner asked for PostHog on 1
 | Statistics against a local stand-in for PostHog, in headless Chrome: page views, page leaves, link and button clicks and `waitlist_joined` arrive; no cookie, local storage or session storage is written; a visit to `/?utm_source=…&gclid=…&q=…#…` sends no query string, fragment or click identifier and keeps `utm_source`; the typed email address is never sent; no request goes to any other host; with Global Privacy Control on, the library is not loaded and nothing is sent; with no PostHog variables, nothing is sent | locally tested | 2026-11-15 |
 | Vercel preview of this branch (commit `a5a1456`): every page 200, unknown path 404, pictures, robots, sitemap and security.txt served, security headers present, waitlist endpoint refuses an empty post | runtime verified, by HTTP only | 2026-11-14 |
 | Preview with the PostHog project connected, visited in headless Chrome: 11 events arrived in PostHog (page views, page leaves with scroll depth, two button clicks, `waitlist_joined`); stored with a hashed daily visitor id and one session id; no IP address, user agent or location stored; `utm_source` kept, query string and click identifier absent; nothing written to cookies or browser storage | runtime verified | 2026-11-15 |
-| Forms delivering to Loops; Safari, Firefox, real phones; statistics on the live domain | not tested | — |
+| Preview in Safari's engine (Playwright WebKit 27.2) at desktop size and as an iPhone: all 12 pages (one `h1`, no sideways overflow, pictures loaded), the header by hover, click, Enter and Escape, the Menu button and its six links, both forms' checks and answers, statistics sent and nothing stored. Form endpoints and PostHog were answered by the test, so nothing real was sent | runtime verified | 2026-11-15 |
+| Preview in Safari on an iPhone 17 simulator (iOS 27.0): home page, Menu, and a move to `/anchor` look right | device verified (simulator, not a physical phone) | 2026-11-15 |
+| One real waitlist sign-up through the preview's `/api/waitlist` answered 200, which the endpoint only does when Loops accepted the contact; `/api/contact` answered 503 with the email fallback, as expected without the template | runtime verified | 2026-11-15 |
+| After a move from one page to another the new page starts at its top (it used to land 35 px down, hiding the breadcrumb), and in-page jumps land clear of the header; measured in WebKit at both sizes | runtime verified | 2026-11-15 |
+| Firefox | not tested: Playwright's Firefox build does not start on this macOS version. Read from the code instead: every newer CSS feature in use has a fallback or is ignored harmlessly (anchor positioning has a fixed fallback, the popover menu has a class fallback) | — |
+| A physical phone; the contact form delivering through Loops; statistics on the live domain | not tested | — |
 | Live on koinelabs.com | `main` only (the old site) | — |
 
 ## Before publishing
