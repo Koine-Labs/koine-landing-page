@@ -6,7 +6,7 @@ export const CONTACT_EMAIL = "team@koinelabs.com";
 export const NORTH_STAR = "Shaping the future through the present, by understanding the past.";
 
 // The date shown on the policy pages. Change it whenever one of them changes.
-export const POLICIES_UPDATED = "14 November 2026";
+export const POLICIES_UPDATED = "15 November 2026";
 
 export const PRODUCTS = {
   mentat: { name: "Mentat", cat: "An interface for AI agents" },

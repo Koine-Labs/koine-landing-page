@@ -1,12 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import SiteAnalytics from "./components/SiteAnalytics";
 import SiteFooter from "./components/SiteFooter";
 import SiteNav from "./components/SiteNav";
 import { SITE_URL } from "./lib/site";
 import "./globals.css";
 
-// Visitor statistics run on the production site only, so previews and local builds are never counted.
-const COUNT_VISITS = process.env.VERCEL_ENV === "production";
+// Visitor statistics are started from instrumentation-client.ts, not from here.
 const TITLE = "Koine Labs";
 const DESCRIPTION = "Koine Labs is a research lab with three products in development: Mentat, Annula and Anchor.";
 
@@ -44,7 +42,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteNav />
         <main id="main">{children}</main>
         <SiteFooter />
-        {COUNT_VISITS ? <SiteAnalytics /> : null}
       </body>
     </html>
   );

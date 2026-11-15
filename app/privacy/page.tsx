@@ -41,7 +41,7 @@ const parts: Part[] = [
         </div>
         <div>
           <dt>Visitor statistics</dt>
-          <dd>We count visits with Vercel Web Analytics, which sets no cookies and does not store your IP address. It records the page you viewed, the site that sent you, your approximate location (country, region and city) worked out from your IP address, and your browser, operating system and device type. Visitors are told apart only by a value that changes every day, so no one is followed from one day to the next. We remove anything after a &ldquo;?&rdquo; or &ldquo;#&rdquo; from page addresses before they are counted. We also count sign-ups and messages by product and topic, never with your address. If your browser sends Global Privacy Control or Do Not Track, nothing is counted at all. Our reason: our legitimate interest in knowing which pages are useful.</dd>
+          <dd>We count visits with PostHog, set up so that it stores nothing on your device: no cookies and no browser storage. It records the page you viewed and its title, the site that sent you, how long the page was open and how far it was scrolled, which links and buttons were pressed, your approximate location (country, region and city) worked out from your IP address, and your browser, operating system, device type, screen size, language and time zone. To tell one visitor from another, PostHog combines your IP address and browser details with the date into a number that changes every day, and does not keep the IP address. So no one is followed from one day to the next, and no profile of you is built. We remove anything after a &ldquo;?&rdquo; or &ldquo;#&rdquo; from page addresses before they are counted. If the link that brought you carried campaign labels (such as utm_source), we keep those, and we discard advertising click identifiers. We also count sign-ups and messages by product and topic, never with your address or anything you typed. If your browser sends Global Privacy Control or Do Not Track, the statistics are not loaded and nothing is counted. Our reason: our legitimate interest in knowing which pages are useful.</dd>
         </div>
         <div>
           <dt>When you join a waitlist</dt>
@@ -72,9 +72,10 @@ const parts: Part[] = [
     title: "Who handles it for us",
     body: (
       <>
-        <p>Two companies process personal information on our behalf, under contracts that limit them to doing it for us:</p>
+        <p>Three companies process personal information on our behalf, under contracts that limit them to doing it for us:</p>
         <dl className="terms">
-          <div><dt>Vercel Inc., United States</dt><dd>Hosts the website, keeps its request records, and provides the visitor statistics.</dd></div>
+          <div><dt>Vercel Inc., United States</dt><dd>Hosts the website and keeps its request records.</dd></div>
+          <div><dt>PostHog Inc., United States</dt><dd>Provides the visitor statistics.</dd></div>
           <div><dt>Loops (loops.so), United States</dt><dd>Keeps the waitlists, sends our emails, and delivers contact-form messages to our inbox.</dd></div>
         </dl>
         <p>We may also disclose information when the law requires it, to protect people&rsquo;s safety, or as part of a merger or sale of the lab, in which case this policy would continue to apply to it.</p>
@@ -87,7 +88,7 @@ const parts: Part[] = [
     body: (
       <ul>
         <li>Request records: a short time, as set by Vercel.</li>
-        <li>Visitor statistics: in counts that do not identify you, kept by Vercel under its own retention.</li>
+        <li>Visitor statistics: records that do not identify you, kept by PostHog for up to one year.</li>
         <li>Waitlists: until you unsubscribe or ask us to delete your address. If a product stops being developed, we delete its waitlist.</li>
         <li>Messages: as long as we need to deal with them, and no longer than two years, unless they lead to an ongoing working relationship.</li>
       </ul>

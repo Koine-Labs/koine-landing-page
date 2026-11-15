@@ -1,6 +1,6 @@
 "use client";
 
-import { track } from "@vercel/analytics";
+import { track } from "../lib/analytics";
 import Link from "next/link";
 import { useRef, useState, type FormEvent } from "react";
 import { CONTACT_EMAIL } from "../lib/site";
@@ -42,7 +42,7 @@ export default function ContactForm() {
       const body = await res.json().catch(() => ({}));
       if (res.ok) {
         form.reset();
-        track("Contact message", { topic: data.topic });
+        track("contact_message_sent", { topic: data.topic });
         setStatus({ kind: "done", text: "Thank you. Your message has reached us, and we will reply to the address you gave." });
         return;
       }

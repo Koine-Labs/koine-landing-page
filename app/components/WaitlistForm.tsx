@@ -1,6 +1,6 @@
 "use client";
 
-import { track } from "@vercel/analytics";
+import { track } from "../lib/analytics";
 import Link from "next/link";
 import { useId, useRef, useState, type FormEvent } from "react";
 import { CONTACT_EMAIL, PRODUCTS, type ProductKey } from "../lib/site";
@@ -40,8 +40,9 @@ export default function WaitlistForm({ product, titleId, button }: { product: Pr
       });
       const body = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(body.error || "");
+      const news = data.get("news") === "yes";
       form.reset();
-      track("Sign-up", { product });
+      track("waitlist_joined", { product, news });
       setStatus({ kind: "done", text: `You're on the list. We'll email you when there is news about ${name}.` });
     } catch (err) {
       const text = err instanceof Error && err.message ? err.message : `That didn't go through. Please try again, or write to ${CONTACT_EMAIL}.`;
