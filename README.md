@@ -97,7 +97,7 @@ Two things keep a newly opened page at its top, and both are needed with Next 16
 - Done, 14 Nov 2026: the owner reviewed the six app screenshots (Anchor: Today, Calendar, This week; Annula: Account, Desk, Watchlist) and approved them for the public site and this public repository.
 - Done, 15 Nov 2026: the owner accepted the policy pages as drafted, and said there is no existing waitlist, so nobody needs notice of the new privacy policy. The privacy policy was then changed to name PostHog instead of Vercel for visitor statistics.
 - Done, 15 Nov 2026: the PostHog project exists, is set up as described under "Visitor statistics", and its token and host are in Vercel.
-- `/privacy` says PostHog acts under a contract. PostHog's data processing agreement for the "Koine Labs" organisation is generated in PostHog under Legal documents and signed by email; it needs the owner's legal name and address.
+- `/privacy` says PostHog acts under a contract. PostHog's data processing agreement for the "Koine Labs" organisation was generated on 15 Nov 2026 (PostHog → Legal documents) and sent to `team@koinelabs.com` for signature. It takes effect when the owner signs it from that email; until then its status in PostHog is "Awaiting signature".
 - `/privacy` says statistics are kept for up to one year, which is PostHog's free-plan retention. Change that line if the plan changes.
 - Contact form: create the Loops transactional email and set `LOOPS_CONTACT_TRANSACTIONAL_ID`. Until then the form offers to send the message from the visitor's email app.
 - Marketing emails from Loops must carry a physical postal address (US CAN-SPAM); set one in Loops before the first one is sent.
