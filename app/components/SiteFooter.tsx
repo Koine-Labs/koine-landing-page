@@ -1,70 +1,49 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { CONTACT_EMAIL, LEGAL, NAV, NORTH_STAR } from "../lib/site";
 
-/**
- * Three-column footer. Koine column links to home-page anchors; Legal column
- * links to dedicated routes (/privacy, /terms, /data-ethics).
- */
-export function SiteFooter() {
+type Item = { href: string; label: string };
+
+function Column({ title, items, path }: { title: string; items: readonly Item[]; path: string }) {
   return (
-    <footer>
-      <div className="foot-wrap">
-        <div className="foot-top">
-          <div className="foot-brand foot-col">
-            <div className="row">
-              <img src="/koine-logo.png" alt="Koine Labs" />
-              <span className="n">
-                Koine <em>Labs</em>
-              </span>
-            </div>
-            <p>
-              <em>Koine Labs</em> builds ambient AI for people who want to live
-              with technology that meets them where they are. By fusing
-              biosignals into a continuous read of how they actually feel.
-            </p>
-          </div>
+    <div>
+      <h2>{title}</h2>
+      <ul>
+        {items.map(({ href, label }) => (
+          <li key={href}>
+            <Link href={href} prefetch={false} aria-current={path === href ? "page" : undefined}>{label}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
-          <div className="foot-col">
-            <h4>Koine</h4>
-            <ul>
-              <li>
-                <Link href="/#daybook">Daybook</Link>
-              </li>
-              <li>
-                <Link href="/#manifesto">Manifesto</Link>
-              </li>
-              <li>
-                <Link href="/#waitlist">Waitlist</Link>
-              </li>
-              <li>
-                <a href="mailto:team@koinelabs.com">Contact</a>
-              </li>
-            </ul>
-          </div>
-
-          <div className="foot-col">
-            <h4>Legal</h4>
-            <ul>
-              <li>
-                <Link href="/privacy">Privacy</Link>
-              </li>
-              <li>
-                <Link href="/terms">Terms</Link>
-              </li>
-              <li>
-                <Link href="/data-ethics">Data ethics</Link>
-              </li>
-            </ul>
-          </div>
+export default function SiteFooter() {
+  const path = usePathname();
+  return (
+    <footer className="site-footer">
+      <div className="foot-in">
+        <div className="foot-brand">
+          <Link className="site-logo" href="/" aria-label="Koine Labs, home" prefetch={false}>
+            <img src="/assets/koine-mark.svg" alt="" width={100} height={100} loading="lazy" />
+            Koine Labs
+          </Link>
+          <p>{NORTH_STAR}</p>
+          <p className="foot-mail"><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
         </div>
-
-        <div className="foot-bottom">
-          <span>&copy; MMXXVI Koine Labs &middot; Atlanta</span>
-          <span>κοινή &middot; common</span>
-        </div>
+        <nav className="foot-nav" aria-label="Footer">
+          <Column title="Products" items={NAV.slice(0, 3)} path={path} />
+          <Column title="The lab" items={NAV.slice(3)} path={path} />
+          <Column title="Policies" items={LEGAL} path={path} />
+        </nav>
+        <p className="foot-legal">
+          <span>© {new Date().getFullYear()} Koine Labs, Atlanta, Georgia</span>
+          <span>No cookies. No advertising trackers.</span>
+        </p>
       </div>
-      <span className="greek-mark" aria-hidden="true">
-        koine
-      </span>
     </footer>
   );
 }

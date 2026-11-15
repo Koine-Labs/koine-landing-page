@@ -1,159 +1,149 @@
-import type { Metadata } from "next";
-import { LegalPage } from "../components/LegalPage";
+import LegalPage, { legalMetadata, type Part } from "../components/LegalPage";
+import { CONTACT_EMAIL } from "../lib/site";
 
-export const metadata: Metadata = {
-  title: "Privacy — Koine Labs",
-  description:
-    "How Koine Labs handles your data, and what we commit to never doing with it.",
-};
+export const metadata = legalMetadata(
+  "Privacy policy",
+  "What koinelabs.com collects, why, who handles it for us, and how to see, change or delete it.",
+  "/privacy",
+);
 
-export default function PrivacyPage() {
+const mail = <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>;
+
+const parts: Part[] = [
+  {
+    id: "who",
+    title: "Who we are",
+    body: (
+      <>
+        <p>Koine Labs (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a research lab based in Atlanta, Georgia, in the United States. It is run by Aakash Agrawal, who is responsible for the personal information described here.</p>
+        <p>You can reach us about anything in this policy at {mail}.</p>
+      </>
+    ),
+  },
+  {
+    id: "scope",
+    title: "What this policy covers",
+    body: (
+      <>
+        <p>This policy covers this website, koinelabs.com: reading it, joining a waitlist, sending us a message, and the emails we send you because you asked for them.</p>
+        <p>It does not cover our apps. Annula has its own privacy policy at <a href="https://useannula.com/privacy">useannula.com/privacy</a>. Anchor and Mentat are not offered to the public. Before either is, it will have its own privacy notice, and we will link to it from here.</p>
+      </>
+    ),
+  },
+  {
+    id: "collect",
+    title: "What we collect, and why",
+    body: (
+      <dl className="terms">
+        <div>
+          <dt>When you visit</dt>
+          <dd>Our host receives what any website receives: your IP address, the page you asked for, the time, and your browser and device type. Vercel uses this to deliver the page and to keep the site secure, and keeps these records for a short time under its own retention settings. Our reason: our legitimate interest in running a working, secure website.</dd>
+        </div>
+        <div>
+          <dt>Visitor statistics</dt>
+          <dd>We count visits with Vercel Web Analytics, which sets no cookies and does not store your IP address. It records the page you viewed, the site that sent you, your approximate location (country, region and city) worked out from your IP address, and your browser, operating system and device type. Visitors are told apart only by a value that changes every day, so no one is followed from one day to the next. We remove anything after a &ldquo;?&rdquo; or &ldquo;#&rdquo; from page addresses before they are counted. We also count sign-ups and messages by product and topic, never with your address. If your browser sends Global Privacy Control or Do Not Track, nothing is counted at all. Our reason: our legitimate interest in knowing which pages are useful.</dd>
+        </div>
+        <div>
+          <dt>When you join a waitlist</dt>
+          <dd>Your email address, which product it is for, when you signed up, and whether you also asked for news about the lab. We use it to email you about that product: when it opens, when there is a place for you, and important news about it. We send news about the lab only if you ticked the box for it. Our reason: your consent, which you can withdraw at any time with the unsubscribe link in every email.</dd>
+        </div>
+        <div>
+          <dt>When you send us a message</dt>
+          <dd>Your name if you give it, your email address, the topic you chose and your message. The form sends it to our inbox as an email; this website does not store it. We use it only to read and answer you. Our reason: our legitimate interest in answering people who write to us, or steps you ask us to take before an agreement.</dd>
+        </div>
+      </dl>
+    ),
+  },
+  {
+    id: "not",
+    title: "What we do not do",
+    body: (
+      <ul>
+        <li>We do not set cookies, and we do not use your browser&rsquo;s storage to track you.</li>
+        <li>We do not run advertising, advertising trackers, session recording or social media pixels.</li>
+        <li>We do not sell your personal information, and we do not share it for advertising based on your activity elsewhere (what California law calls &ldquo;selling&rdquo; and &ldquo;sharing&rdquo;).</li>
+        <li>We do not give it to data brokers, and we do not use it to train AI models, ours or anyone else&rsquo;s.</li>
+        <li>We do not ask this website for sensitive information, such as health, financial or biometric details. Please do not put them in a message.</li>
+      </ul>
+    ),
+  },
+  {
+    id: "providers",
+    title: "Who handles it for us",
+    body: (
+      <>
+        <p>Two companies process personal information on our behalf, under contracts that limit them to doing it for us:</p>
+        <dl className="terms">
+          <div><dt>Vercel Inc., United States</dt><dd>Hosts the website, keeps its request records, and provides the visitor statistics.</dd></div>
+          <div><dt>Loops (loops.so), United States</dt><dd>Keeps the waitlists, sends our emails, and delivers contact-form messages to our inbox.</dd></div>
+        </dl>
+        <p>We may also disclose information when the law requires it, to protect people&rsquo;s safety, or as part of a merger or sale of the lab, in which case this policy would continue to apply to it.</p>
+      </>
+    ),
+  },
+  {
+    id: "keep",
+    title: "How long we keep it",
+    body: (
+      <ul>
+        <li>Request records: a short time, as set by Vercel.</li>
+        <li>Visitor statistics: in counts that do not identify you, kept by Vercel under its own retention.</li>
+        <li>Waitlists: until you unsubscribe or ask us to delete your address. If a product stops being developed, we delete its waitlist.</li>
+        <li>Messages: as long as we need to deal with them, and no longer than two years, unless they lead to an ongoing working relationship.</li>
+      </ul>
+    ),
+  },
+  {
+    id: "transfers",
+    title: "Where it is kept",
+    body: <p>Your information is kept in the United States. If you write to us or sign up from outside it, including from the European Economic Area, the United Kingdom or Switzerland, your information is transferred to the United States under the safeguards in our providers&rsquo; data processing terms, such as the European Commission&rsquo;s Standard Contractual Clauses.</p>,
+  },
+  {
+    id: "rights",
+    title: "Your rights",
+    body: (
+      <>
+        <p>Wherever you live, you can ask us to:</p>
+        <ul>
+          <li>tell you what we hold about you and give you a copy;</li>
+          <li>correct it;</li>
+          <li>delete it;</li>
+          <li>stop using it for a purpose, or stop emailing you (every email also has a one-click unsubscribe link).</li>
+        </ul>
+        <p>If you are in the European Economic Area, the United Kingdom or Switzerland, you also have the right to object to processing based on our legitimate interests, to take your data with you, to withdraw consent at any time, and to complain to your data protection authority.</p>
+        <p>If you live in a US state with a privacy law, such as California, you have the right to know, delete and correct, and the right to opt out of the sale or sharing of your information, which we do not do. We will not treat you differently for using any of these rights. You can use an authorised agent to make a request.</p>
+        <p>To make a request, email {mail} from the address you used with us, so we can confirm it is yours. We will answer within 30 days.</p>
+      </>
+    ),
+  },
+  {
+    id: "children",
+    title: "Children",
+    body: <p>This website is not meant for anyone under 16, and we do not knowingly collect information from them. If you think a child has given us their details, write to {mail} and we will delete them.</p>,
+  },
+  {
+    id: "security",
+    title: "Keeping it safe",
+    body: <p>The site is served only over an encrypted connection, the information is held by the two providers above, and only the people who run the lab can see it. If something goes wrong, we will tell the people affected and the authorities as the law requires. To report a security problem, see <a href="/security">our security page</a>.</p>,
+  },
+  {
+    id: "changes",
+    title: "Changes to this policy",
+    body: <p>When this policy changes, we update the date at the top of this page. If a change affects how we use information you have already given us, we will email the people it affects before it takes effect.</p>,
+  },
+  {
+    id: "contact",
+    title: "Contact",
+    body: <p>Questions, requests and complaints about privacy go to {mail}.</p>,
+  },
+];
+
+export default function Privacy() {
   return (
     <LegalPage
-      eyebrow="Legal · Privacy"
-      title={
-        <>
-          Privacy<span className="legal-period">.</span>
-        </>
-      }
-      lede="How we handle your data, and what we commit to never doing with it."
-      updated="May 22, 2026"
-    >
-      <p className="legal-note">
-        Koine Labs is pre-launch. Neither Daybook nor Koine Wisp are shipping
-        yet. This policy covers the koinelabs.com website and the waitlist
-        signup only. When products launch, this policy will be revised and
-        you&apos;ll be notified before any changes take effect.
-      </p>
-
-      <section>
-        <h2>What we collect right now</h2>
-        <p>
-          Just your email address, and only if you join the waitlist. We do not
-          run third-party analytics, advertising trackers, or session
-          recording. We do not set marketing cookies.
-        </p>
-        <p>
-          Standard server logs (IP address, request timestamp, user agent) are
-          retained for up to 30 days for security and abuse prevention, then
-          discarded.
-        </p>
-      </section>
-
-      <section>
-        <h2>What we use your email for</h2>
-        <ul>
-          <li>To notify you when Daybook + Koine Wisp open access.</li>
-          <li>To share major product or company updates, infrequently.</li>
-          <li>Nothing else.</li>
-        </ul>
-        <p>
-          You can unsubscribe from any email we send with one click. Doing so
-          removes you from the waitlist entirely.
-        </p>
-      </section>
-
-      <section>
-        <h2>What we never do</h2>
-        <ul>
-          <li>We do not sell your data. To anyone.</li>
-          <li>We do not share it with advertisers.</li>
-          <li>We do not share it with data brokers.</li>
-          <li>We do not use it to train third-party AI models.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>What we&apos;ll collect when products ship</h2>
-        <p>
-          This is the part that matters most, and the part still being
-          designed. The following is our intent, not yet a binding policy.
-        </p>
-        <ul>
-          <li>
-            <strong>Biosignals</strong> from Koine Wisp and from any third-party
-            sources you connect (Apple Health, etc.). Always opt-in per signal
-            class — you can grant brain, audio, visual, heart, or body
-            independently.
-          </li>
-          <li>
-            <strong>Daybook entries</strong> — the read of your inner state
-            over time, plus any text or notes you add yourself.
-          </li>
-          <li>
-            <strong>Settings and preferences</strong> — what you&apos;ve
-            configured Daybook to do or not do.
-          </li>
-        </ul>
-        <p>
-          Where technically possible, inference will happen on-device.
-          Aggregated and anonymized data may be used for model improvement only
-          if you opt in to that specifically; default is off.
-        </p>
-      </section>
-
-      <section>
-        <h2>Your rights</h2>
-        <ul>
-          <li>
-            <strong>Access</strong> — request a copy of everything we hold on
-            you.
-          </li>
-          <li>
-            <strong>Deletion</strong> — wipe your data, anytime, and we
-            actually mean it (we won&apos;t retain backups beyond what&apos;s
-            required to restore service availability).
-          </li>
-          <li>
-            <strong>Portability</strong> — export your data in a standard
-            format and take it with you.
-          </li>
-          <li>
-            <strong>Correction</strong> — fix anything we have wrong.
-          </li>
-          <li>
-            <strong>Objection</strong> — opt out of any specific use of your
-            data without losing access to the product.
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Where data lives</h2>
-        <p>
-          Our infrastructure currently runs in the United States. When we open
-          to international users, we&apos;ll add region-aware storage
-          appropriate to your jurisdiction.
-        </p>
-      </section>
-
-      <section>
-        <h2>Children</h2>
-        <p>
-          Koine Labs services are not directed at people under 16. We do not
-          knowingly collect data from anyone under 16. If you believe a minor
-          has joined our waitlist, contact us and we&apos;ll remove them.
-        </p>
-      </section>
-
-      <section>
-        <h2>Changes to this policy</h2>
-        <p>
-          Material changes will be announced by email to anyone on the
-          waitlist, at least 30 days before they take effect. Non-material
-          changes (typos, clarifications) may be made without notice but will
-          be reflected in the &ldquo;Last updated&rdquo; line above.
-        </p>
-      </section>
-
-      <section>
-        <h2>Contact</h2>
-        <p>
-          Privacy questions go to{" "}
-          <a href="mailto:team@koinelabs.com">team@koinelabs.com</a>. We aim to
-          respond within five business days.
-        </p>
-      </section>
-    </LegalPage>
+      title="Privacy policy"
+      summary="This site collects as little as it can: anonymous visit counts, your email address if you join a waitlist, and your message if you write to us. No cookies, no advertising, and we never sell your information."
+      parts={parts}
+    />
   );
 }

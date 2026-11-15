@@ -1,69 +1,73 @@
-import { NextResponse } from "next/server";
-
 /**
- * Waitlist signup endpoint.
+ * POST /api/waitlist — join the waitlist for one product.
  *
- * Behavior:
- * - Always validates and logs the email to Vercel function logs.
- * - If LOOPS_API_KEY is set, upserts the contact into Loops under the
- *   "Waitlist" user group so the list is reviewable + emailable from
- *   the Loops dashboard. Duplicates are handled gracefully (upsert).
+ * Body (JSON): { email, product: "mentat" | "annula" | "anchor", news: boolean, website: "" (hidden field), elapsed: ms }
  *
- * To enable Loops sync:
- * 1. Sign up at https://loops.so (free up to 1,000 contacts).
- * 2. Settings → API → create a key.
- * 3. Add LOOPS_API_KEY to your Vercel project env vars.
+ * The address goes to Loops, the email service named in /privacy, and nowhere else. Nothing typed is logged.
  *
- * Until then, signups are visible in Vercel logs under
- * Functions → api/waitlist.
+ * Settings (Vercel project → Settings → Environment Variables):
+ * - LOOPS_API_KEY            required. Without it the endpoint answers 503 and the form says so.
+ * - LOOPS_LIST_MENTAT, LOOPS_LIST_ANNULA, LOOPS_LIST_ANCHOR
+ *                            optional. The ID of a Loops mailing list for each product. When set, a sign-up joins
+ *                            that list, so each product's list can be emailed on its own.
+ * - LOOPS_LIST_NEWS          optional. The list for lab news; joined only when the "news" box is ticked.
  */
+import { cleanEmail, EMAIL_RE, looksAutomated, readJson, reply, tooMany } from "../../lib/forms";
 
-const LOOPS_ENDPOINT = "https://app.loops.so/api/v1/contacts/update";
+const PRODUCTS = ["mentat", "annula", "anchor"] as const;
+type Product = (typeof PRODUCTS)[number];
+const LIST_VAR: Record<Product, string> = { mentat: "LOOPS_LIST_MENTAT", annula: "LOOPS_LIST_ANNULA", anchor: "LOOPS_LIST_ANCHOR" };
+const FAILED = "That didn't go through on our side. Please try again in a moment, or write to team@koinelabs.com.";
 
 export async function POST(request: Request) {
-  let email: string;
+  const body = await readJson(request);
+  if (!body) return reply(400, { error: "Something was wrong with that request. Please try again." });
+
+  const email = cleanEmail(body.email);
+  if (!EMAIL_RE.test(email)) return reply(400, { error: "Enter an email address like name@example.com." });
+  const product = PRODUCTS.find((p) => p === body.product);
+  if (!product) return reply(400, { error: "Something was wrong with that request. Please reload the page and try again." });
+  const news = body.news === true;
+
+  if (tooMany(request, "waitlist", 8, 10 * 60_000)) {
+    return reply(429, { error: "Too many sign-ups from here in a short time. Please try again in a few minutes." });
+  }
+  if (looksAutomated(body, 1500)) return reply(200, { ok: true });   // answer as usual, keep nothing
+
+  const key = process.env.LOOPS_API_KEY;
+  if (!key) {
+    console.error("[waitlist] LOOPS_API_KEY is not set");
+    return reply(503, { error: "Sign-ups are not open on this server yet. Please write to team@koinelabs.com." });
+  }
+
+  const lists: Record<string, boolean> = {};
+  const productList = process.env[LIST_VAR[product]];
+  if (productList) lists[productList] = true;
+  if (news && process.env.LOOPS_LIST_NEWS) lists[process.env.LOOPS_LIST_NEWS] = true;
+
   try {
-    const body = await request.json();
-    email = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
-  } catch {
-    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
-  }
-
-  // basic email sanity check
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json(
-      { error: "Please provide a valid email address." },
-      { status: 400 }
-    );
-  }
-
-  // always log — appears in Vercel function logs
-  console.log(`[waitlist] signup: ${email}`);
-
-  // optional sync to Loops (upsert — handles duplicates by design)
-  if (process.env.LOOPS_API_KEY) {
-    try {
-      const res = await fetch(LOOPS_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.LOOPS_API_KEY}`,
-        },
-        body: JSON.stringify({
-          email,
-          source: "Koine Labs website",
-          userGroup: "Waitlist",
-          subscribed: true,
-        }),
-      });
-      if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        console.error("[waitlist] loops api error:", res.status, text);
-      }
-    } catch (err) {
-      console.error("[waitlist] loops sync failed:", err);
+    const res = await fetch("https://app.loops.so/api/v1/contacts/update", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+      body: JSON.stringify({
+        email,
+        source: `koinelabs.com, ${product}`,
+        userGroup: "Waitlist",
+        // "subscribed" is left alone on purpose: anyone can type any address here, so a sign-up never undoes an
+        // earlier unsubscribe. New contacts start subscribed.
+        ...(Object.keys(lists).length ? { mailingLists: lists } : {}),
+      }),
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) {
+      console.error(`[waitlist] Loops answered ${res.status}`);
+      return reply(502, { error: FAILED });
     }
+  } catch (err) {
+    console.error("[waitlist] could not reach Loops:", err instanceof Error ? err.name : "error");
+    return reply(502, { error: FAILED });
   }
 
-  return NextResponse.json({ ok: true });
+  console.log(`[waitlist] sign-up for ${product}${news ? ", with lab news" : ""}`);
+  return reply(200, { ok: true });
 }

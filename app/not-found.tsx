@@ -1,49 +1,24 @@
+// Ported from design-prototypes/public-v10 on 14 Nov 2026. Edit this file directly from now on.
 import type { Metadata } from "next";
-import Link from "next/link";
-import { FieldCanvas } from "./components/FieldCanvas";
-import { SiteNav } from "./components/SiteNav";
-import { SiteFooter } from "./components/SiteFooter";
 
-export const metadata: Metadata = {
-  title: "Not yet — Koine Labs",
-  description:
-    "This page doesn't exist — at least not here, not yet. Find what you came for at koinelabs.com.",
-};
+export const metadata: Metadata = { title: "Not found · Koine Labs", robots: { index: false } };
 
 export default function NotFound() {
   return (
     <>
-      <FieldCanvas />
-      <SiteNav />
-      <main className="notfound">
-        <div className="notfound-inner">
-          <div className="notfound-eyebrow">404 · not found</div>
-          <h1 className="notfound-title">
-            Not <em>yet</em>
-            <span className="notfound-period">.</span>
-          </h1>
-          <p className="notfound-lede">
-            This page doesn&apos;t exist. Or it doesn&apos;t exist yet.
-            Either way, the one you&apos;re looking for is probably home.
-          </p>
-          <Link href="/" className="notfound-cta">
-            Return to Koine Labs
-            <svg
-              viewBox="0 0 14 14"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              aria-hidden="true"
-            >
-              <path d="M2 7h10M7 2l5 5-5 5" />
-            </svg>
-          </Link>
-          <div className="notfound-greek" aria-hidden="true">
-            κοινή
+      <p className="crumb"><a href="/">Koine Labs</a></p>
+      <section className="sec page-top" id="not-found">
+        <div className="in">
+          <header className="side">
+            <h1 className="side-title">Not found</h1>
+          </header>
+          <div className="main">
+            <p className="mission">This page is not here.</p>
+            <p className="lead nf">It may have moved, or the address may be mistyped. These are the places it was most likely leading to.</p>
+            <div className="next"><a href="/mentat"><b>Mentat</b><span>An interface for AI agents</span></a><a href="/annula"><b>Annula</b><span>Research software for investors</span></a><a href="/anchor"><b>Anchor</b><span>An app that learns how you live</span></a><a href="/"><b>Home</b><span>Koine Labs</span></a></div>
           </div>
         </div>
-      </main>
-      <SiteFooter />
+      </section>
     </>
   );
 }

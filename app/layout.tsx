@@ -1,83 +1,51 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import SiteAnalytics from "./components/SiteAnalytics";
+import SiteFooter from "./components/SiteFooter";
+import SiteNav from "./components/SiteNav";
+import { SITE_URL } from "./lib/site";
 import "./globals.css";
 
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-serif",
-  display: "swap",
-});
+// Visitor statistics run on the production site only, so previews and local builds are never counted.
+const COUNT_VISITS = process.env.VERCEL_ENV === "production";
+const TITLE = "Koine Labs";
+const DESCRIPTION = "Koine Labs is a research lab with three products in development: Mentat, Annula and Anchor.";
 
-const interTight = Inter_Tight({
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-mono",
-  display: "swap",
-});
-
-const SITE_URL = "https://koinelabs.com";
-const SITE_TITLE = "Koine Labs — Ambient AI";
-const SITE_DESCRIPTION =
-  "Koine Labs builds ambient AI for people who want to live with technology that meets them where they are. By fusing biosignals into a continuous read of how they actually feel.";
-
+// Icons come from the files beside this one: favicon.ico, icon.svg and apple-icon.png.
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: SITE_TITLE,
-  description: SITE_DESCRIPTION,
+  title: TITLE,
+  description: DESCRIPTION,
   manifest: "/site.webmanifest",
-  icons: {
-    // app/favicon.ico is auto-discovered by Next.js App Router
-    icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    ],
-    apple: "/apple-touch-icon.png",
-  },
-  // opengraph-image.tsx auto-attaches the social card image to these tags
   openGraph: {
     type: "website",
-    url: SITE_URL,
     siteName: "Koine Labs",
-    title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
     locale: "en_US",
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "/",
+    images: [{ url: "/og/og-home.png", width: 1200, height: 630, alt: "Koine Labs" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["/og/og-home.png"] },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#f8f4ec",
+  colorScheme: "light",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${instrumentSerif.variable} ${interTight.variable} ${jetbrainsMono.variable}`}
-    >
-      <body>{children}</body>
+    <html lang="en">
+      <body>
+        <a className="skip" href="#main">Skip to content</a>
+        <SiteNav />
+        <main id="main">{children}</main>
+        <SiteFooter />
+        {COUNT_VISITS ? <SiteAnalytics /> : null}
+      </body>
     </html>
   );
 }

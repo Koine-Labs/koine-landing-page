@@ -1,150 +1,119 @@
-import type { Metadata } from "next";
-import { LegalPage } from "../components/LegalPage";
+import LegalPage, { legalMetadata, type Part } from "../components/LegalPage";
+import { CONTACT_EMAIL } from "../lib/site";
 
-export const metadata: Metadata = {
-  title: "Terms — Koine Labs",
-  description:
-    "The terms that govern your use of the Koine Labs website and waitlist.",
-};
+export const metadata = legalMetadata(
+  "Terms of use",
+  "The terms for using koinelabs.com, its waitlists and its contact form.",
+  "/terms",
+);
 
-export default function TermsPage() {
+const mail = <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>;
+
+const parts: Part[] = [
+  {
+    id: "scope",
+    title: "What these terms cover",
+    body: (
+      <>
+        <p>These terms cover this website, koinelabs.com, including its waitlists and contact form. By using the site you agree to them.</p>
+        <p>They do not cover our apps. Annula has its own terms on <a href="https://useannula.com/terms">useannula.com</a>. Apps we test through Apple&rsquo;s TestFlight are also subject to Apple&rsquo;s terms and to any terms shown in the app. When an app opens to the public, its own terms will be shown before you use it.</p>
+      </>
+    ),
+  },
+  {
+    id: "who",
+    title: "Who we are",
+    body: <p>Koine Labs (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a research lab based in Atlanta, Georgia, in the United States. You can reach us at {mail}.</p>,
+  },
+  {
+    id: "use",
+    title: "Using the site",
+    body: (
+      <>
+        <p>You are welcome to read the site, share links to it, join a waitlist and write to us. When you do, you agree that:</p>
+        <ul>
+          <li>you are at least 16;</li>
+          <li>the email address you give is yours;</li>
+          <li>you will not sign other people up without their permission;</li>
+          <li>you will not try to break, overload or get around the site&rsquo;s security, or send automated sign-ups or messages;</li>
+          <li>you will not copy the site&rsquo;s text or images in bulk, including to train AI models.</li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: "plans",
+    title: "Plans, not promises",
+    body: (
+      <>
+        <p>This site describes research and products in development. What a product does today is described as such. Everything under &ldquo;What we want to build&rdquo; and &ldquo;Where it is going&rdquo;, and every design drawing, shows what we are working toward. It is not built yet, may change, and may never be built.</p>
+        <p>Screenshots and figures in drawings use sample data unless they say otherwise. Joining a waitlist does not guarantee access to a product or a date when it opens.</p>
+      </>
+    ),
+  },
+  {
+    id: "advice",
+    title: "Not investment advice, and not an offer",
+    body: (
+      <>
+        <p>Nothing on this site is investment, financial, legal or tax advice. That includes the descriptions of Annula and any company, figure or price shown in its screenshots and drawings, which are examples.</p>
+        <p>Nothing on this site is an offer to sell, or a request for an offer to buy, any security or interest in Koine Labs. Statements about what we plan to do are forward-looking: they reflect what we intend today, and the outcome may be different.</p>
+      </>
+    ),
+  },
+  {
+    id: "ip",
+    title: "Our work and our names",
+    body: (
+      <>
+        <p>The site&rsquo;s text, drawings, screenshots and design, and the names and marks Koine Labs, Mentat, Annula and Anchor, belong to Koine Labs. You may quote short passages with a link back, for commentary, reporting or research. For anything more, ask us first.</p>
+        <p>If you send us ideas or feedback, you agree that we may use them without owing you anything. Please do not send us anything you consider confidential.</p>
+      </>
+    ),
+  },
+  {
+    id: "links",
+    title: "Links to other sites",
+    body: <p>Where we link to another site, we do so for your convenience. We are not responsible for its content or its privacy practices.</p>,
+  },
+  {
+    id: "warranty",
+    title: "No warranties",
+    body: <p>The site is provided &ldquo;as is&rdquo; and &ldquo;as available&rdquo;. We work to keep it accurate and online, but to the extent the law allows, we make no promises that it is complete, current, free of errors or always available.</p>,
+  },
+  {
+    id: "liability",
+    title: "Limit of liability",
+    body: <p>To the extent the law allows, Koine Labs and the people who run it are not liable for indirect, incidental, special or consequential losses, or for lost profits or data, arising from your use of the site. Our total liability for any claim about the site is limited to US$100. Some places do not allow these limits, so they may not all apply to you.</p>,
+  },
+  {
+    id: "end",
+    title: "Removing access",
+    body: <p>We may remove anyone from a waitlist, or block access to the site, if they misuse it. You can leave a waitlist at any time with the unsubscribe link in any email from us.</p>,
+  },
+  {
+    id: "law",
+    title: "Governing law",
+    body: <p>These terms are governed by the laws of the State of Georgia, in the United States, without regard to its conflict-of-law rules. Disputes will be decided in the state or federal courts located in Georgia, unless the law where you live gives you the right to bring them there.</p>,
+  },
+  {
+    id: "changes",
+    title: "Changes to these terms",
+    body: <p>When these terms change, we update the date at the top of this page. Changes apply from that date. If a change matters to people on a waitlist, we will email them about it first.</p>,
+  },
+  {
+    id: "contact",
+    title: "Contact",
+    body: <p>Questions about these terms go to {mail}.</p>,
+  },
+];
+
+export default function Terms() {
   return (
     <LegalPage
-      eyebrow="Legal · Terms"
-      title={
-        <>
-          Terms<span className="legal-period">.</span>
-        </>
-      }
-      lede="By using this site or joining our waitlist, you agree to the terms below."
-      updated="May 22, 2026"
-    >
-      <p className="legal-note">
-        These terms cover the koinelabs.com website and the waitlist signup
-        only. When Daybook and Koine Wisp launch, additional product terms
-        will apply. You&apos;ll see them and accept them before using either.
-      </p>
-
-      <section>
-        <h2>Who we are</h2>
-        <p>
-          Koine Labs is a project building ambient AI for inner state, based
-          in Atlanta, Georgia. References to &ldquo;we,&rdquo; &ldquo;us,&rdquo;
-          or &ldquo;Koine Labs&rdquo; mean the team behind koinelabs.com.
-        </p>
-      </section>
-
-      <section>
-        <h2>What you can do here</h2>
-        <ul>
-          <li>Read about what we&apos;re building.</li>
-          <li>Join our waitlist by providing your email.</li>
-          <li>Contact us about the project.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>What you agree to</h2>
-        <ul>
-          <li>You&apos;re at least 16 years old.</li>
-          <li>The email you provide is yours and is accurate.</li>
-          <li>
-            You will not attempt to break, overload, scrape, or otherwise abuse
-            this site.
-          </li>
-          <li>
-            You will not impersonate anyone else or sign up other people
-            without their consent.
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>What we promise</h2>
-        <ul>
-          <li>
-            We will use waitlist emails only for product updates and important
-            company communications.
-          </li>
-          <li>
-            We will not sell, share, or rent your email address. See the{" "}
-            <a href="/privacy">Privacy</a> policy for details.
-          </li>
-          <li>You can unsubscribe with one click at any time.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Intellectual property</h2>
-        <p>
-          The Koine Labs name, Daybook, Koine Wisp, the κοινή mark, the site
-          design, copy, and any associated trademarks are the property of
-          Koine Labs. You may not reproduce, distribute, or create derivative
-          works of any of it without prior written permission.
-        </p>
-        <p>
-          Quoting short excerpts for criticism, journalism, or research is
-          fine and welcomed.
-        </p>
-      </section>
-
-      <section>
-        <h2>No warranties</h2>
-        <p>
-          This site is provided as-is, without warranty of any kind, express
-          or implied. We do our best to keep it accurate and available, but we
-          are a pre-launch company and things may change, break, or be wrong.
-          We do not warrant that the information here is complete, current, or
-          free of error.
-        </p>
-      </section>
-
-      <section>
-        <h2>Limitation of liability</h2>
-        <p>
-          To the maximum extent permitted by law, Koine Labs and its officers,
-          employees, and agents shall not be liable for any indirect,
-          incidental, special, consequential, or punitive damages arising out
-          of or related to your use of this site. Our total liability for any
-          claim arising from your use of this site is limited to $100 USD.
-        </p>
-      </section>
-
-      <section>
-        <h2>Termination</h2>
-        <p>
-          We reserve the right to remove anyone from the waitlist for any
-          reason, including abuse of the site or misuse of communications we
-          send. We will notify you if we do.
-        </p>
-      </section>
-
-      <section>
-        <h2>Governing law</h2>
-        <p>
-          These terms are governed by the laws of the State of Georgia,
-          without regard to its conflict-of-law principles. Any dispute will
-          be resolved in the state or federal courts located in Georgia.
-        </p>
-      </section>
-
-      <section>
-        <h2>Changes to these terms</h2>
-        <p>
-          We may update these terms from time to time. Material changes will
-          be announced by email to anyone on the waitlist, at least 30 days
-          before they take effect. Continued use of the site after the
-          effective date constitutes acceptance.
-        </p>
-      </section>
-
-      <section>
-        <h2>Contact</h2>
-        <p>
-          Questions about these terms go to{" "}
-          <a href="mailto:team@koinelabs.com">team@koinelabs.com</a>.
-        </p>
-      </section>
-    </LegalPage>
+      title="Terms of use"
+      summary="Use the site in good faith. What we describe as planned is not built yet, nothing here is investment advice or an offer of securities, and the work on it belongs to Koine Labs."
+      parts={parts}
+    />
   );
 }
