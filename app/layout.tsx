@@ -36,7 +36,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    // data-scroll-behavior tells Next.js to switch smooth scrolling off while it moves to another page, so the new
+    // page starts at its top at once. Smooth scrolling (globals.css) still applies to jumps within a page.
+    <html lang="en" data-scroll-behavior="smooth">
       <body>
         <a className="skip" href="#main">Skip to content</a>
         <SiteNav />
