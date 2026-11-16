@@ -106,6 +106,6 @@ Two things keep a newly opened page at its top, and both are needed with Next 16
 - Done, 15 Nov 2026: the contact form delivers. The Loops transactional email is published, its ID is in Vercel, and Loops shows the sending domain `send.koinelabs.com` as verified (its seven DNS records are in the `koinelabs.com` zone).
 - Loops' data processing agreement is part of its terms of service, so there was nothing separate to sign. `/privacy` relies on it when it says Loops acts under a contract.
 - Marketing emails from Loops must carry a physical postal address (US CAN-SPAM); set one in Loops before the first one is sent.
-- `emails/welcome.html` still describes Daybook and Koine Wisp; no code sends it. Check that Loops has no automation that sends it when a contact is added.
+- Checked, 15 Nov 2026: `emails/welcome.html` still describes Daybook and Koine Wisp, but nothing sends it. No code does, Loops has one workflow and it is an unsent draft from May 2026, and a real sign-up produced no email. Rewrite or delete the file before any welcome email is switched on.
 - `docs/claim-audit.md` audits the old site's claims, not this branch's.
 - Any push to `main` deploys to the live site.
